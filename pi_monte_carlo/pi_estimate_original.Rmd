@@ -13,6 +13,7 @@ library(ggforce)   # extending ggplot options
 ```
 
 ```{r}
+
 # estimating pi with increasing sample size
 # modified from code posted to mastodon 
 #    by @neilstats@fediscience.org 2023-03-14
@@ -22,79 +23,14 @@ y <- runif(10000)
 n <- 1:10000
 
 plot(n, sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4)), type = "l")
-```
 
-
-How does this work?
-
-* A square where one side is of length 2 has an area of 4
-
-* A circle where $r = 1$ (and $d = 2$; i.e. the same diameter as one side of our square) has an area of $\pi$
-
-* When centred at the origin, a circle $r = 1$ has the equation $x^2+y^2=1$
-
-```{r plot-circle}
-# plot a circle using ggforce::geom_circle()  https://ggforce.data-imaginist.com/
-ggplot() +
-  geom_rect(aes(xmin = -1, xmax = 1, ymin = -1, ymax = 1), fill = "white", alpha = 0.1, colour = "red") + 
-  ggforce::geom_circle(aes(x0 = 0, y0 = 0, r = 1), colour = "blue") +
-  geom_point(aes(0,0), colour = "darkgreen") +
-  geom_segment(aes(x = 0, y = 0, xend = 1, yend = 0), colour = "darkgreen") +
-  coord_fixed() +
-  labs(
-    title = "Square with side = 2 and\nCircle with diameter = 2 (radius = 1)"
-  )
-```
-
-
-The ratio of the area of this circle to the area of the square is therefore $\pi / 4$
-
-
-
-```{r}
-set.seed(1729)
-
-x <- runif(10000)  # 10,000 random ("r") numbers between 0 and 1 from uniform ("unif") distribution
-y <- runif(10000)
-n <- 1:10000
-
-#sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4))
-
-plot(n, sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4)), type = "l")
-
-```
-
-
-
-```{r}
-set.seed(1729)
 
 # with z as number of iterations
 z <- 10
 
-x <- runif(z)  # z random ("r") numbers between 0 and 1 from uniform ("unif") distribution
-y <- runif(z)
-n <- 1:z
-
-sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4))
-
-plot(n, sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4)), type = "l")
-
-```
+tibble(n = 1:z, x = runif(z), y = runif(z))
 
 
-
-```{r}
-set.seed(42)
-
-# with z as number of iterations
-z <- 10
-
-# tibble instead of vectors
-pi_tbl <- tibble(n = 1:z, x = runif(z), y = runif(z))
-
-pi_tbl <- pi_tbl |> 
-  mutate()
 
 plot(n, sapply(n, (\(i) mean(x[1:i]^2 + y[1:i]^2 < 1) * 4)), type = "l")
 
